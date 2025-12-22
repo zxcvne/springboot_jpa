@@ -1,4 +1,4 @@
-# springboot_jpa
+# springboot_JPA
 
 ## 라이브러리 
 

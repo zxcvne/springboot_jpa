@@ -21,12 +21,12 @@ function fileValid(fileName, fileSize) {
 
 document.getElementById("file").addEventListener("change", (e) => {
   const fileObject = e.target.files;
+  const div = document.getElementById("fileZone");
   // 등록버튼 비활성화 풀기
   document.getElementById("regBtn").disabled = false;
   // 이전 등록 못하는 파일을 제거
   div.innerHTML = "";
 
-  const div = document.getElementById("fileZone");
 
   let ul = `<ul class="list-group">`;
   let isOk = 1; // 모든 첨부파일에 대한 검증 통과 결과 체크 *= 누적 곱

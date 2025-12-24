@@ -1,8 +1,17 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.*;
 
+@Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class File extends TimeBase{
     @Id
     private String uuid;

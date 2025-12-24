@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.BoardFileDTO;
+import com.example.demo.dto.FileDTO;
+import com.example.demo.handler.FileHandler;
 import com.example.demo.handler.PageHandler;
 import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ import java.util.List;
 @Controller
 public class BoardController {
     private final BoardService boardService;
+    private final FileHandler fileHandler;
 
     @GetMapping("/register")
     public void register() {};
@@ -33,9 +37,17 @@ public class BoardController {
         // 파일처리
         // 저장될 파일 데이터 + 직접 폴더에 파일을 저장
         // 파일 테이블 별도 분리
+        List<FileDTO> fileList = null;
+        if(files != null && files[0].getSize() > 0){
+            // 핸들러 호출
+            fileList = fileHandler.uploadFile(files);
+        }
+        BoardFileDTO boardFileDTO = new BoardFileDTO(boardDTO,fileList);
+        Long bno = boardService.insert(boardFileDTO);
 
-        Long bno = boardService.insert(boardDTO);
-        log.info(">>> insert id >> {}", bno);
+        log.info(">>> fileList >> {}", fileList);
+        // Long bno = boardService.insert(boardDTO);
+        // log.info(">>> insert id >> {}", bno);
         return "redirect:/";
     }
 
@@ -66,8 +78,8 @@ public class BoardController {
 
     @GetMapping("/detail")
     public void detail(@RequestParam("bno") long bno, Model model){
-        BoardDTO boardDTO = boardService.getDetail(bno);
-        model.addAttribute("board" , boardDTO);
+        BoardFileDTO boardFileDTO = boardService.getDetail(bno);
+        model.addAttribute("boardFileDTO" , boardFileDTO);
     }
 
     @PostMapping("/modify")

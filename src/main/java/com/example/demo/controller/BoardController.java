@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -27,7 +28,12 @@ public class BoardController {
     public void register() {};
 
     @PostMapping("/register")
-    public String register(BoardDTO boardDTO) {
+    public String register(BoardDTO boardDTO
+                            , @RequestParam(name = "files", required = false)MultipartFile[] files) {
+        // 파일처리
+        // 저장될 파일 데이터 + 직접 폴더에 파일을 저장
+        // 파일 테이블 별도 분리
+
         Long bno = boardService.insert(boardDTO);
         log.info(">>> insert id >> {}", bno);
         return "redirect:/";

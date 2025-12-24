@@ -37,3 +37,9 @@ entity => 테이블 mapping용 객체
 
 DTO => 화면 
 Entitiy => Mapping
+
+---
+thumbnailator 0.4.20 -> 추가
+
+application.properties
+fileupload 설정 추가

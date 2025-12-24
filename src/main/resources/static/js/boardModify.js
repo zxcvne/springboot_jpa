@@ -20,6 +20,8 @@ document.getElementById("modBtn").addEventListener("click", () => {
   document.getElementById("modBtn").remove();
   document.getElementById("delBtn").remove();
   document.getElementById("listBtn").remove();
+  // 댓글 라인도 삭제
+  document.getElementById("comment").remove();
 });
 
 // list 버튼을 클릭하면 /board/list로 이동

@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.handler.PageHandler;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -34,12 +36,22 @@ public class CommentController {
                 return cno > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
                 : new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @GetMapping(value = "/list/{bno}",
+      // 페이지가 없는 케이스
+//    @GetMapping(value = "/list/{bno}/",
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<List<CommentDTO>> list(@PathVariable("bno") Long bno){
+//        List<CommentDTO> list = commentService.getList(bno);
+//        return new ResponseEntity<List<CommentDTO>>(list,HttpStatus.OK);
+//    }
+    // 페이지가 있는 케이스
+    @GetMapping(value = "/list/{bno}/{page}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CommentDTO>> list(@PathVariable("bno") Long bno){
-        List<CommentDTO> list = commentService.getList(bno);
-        return new ResponseEntity<List<CommentDTO>>(list,HttpStatus.OK);
+    public ResponseEntity<PageHandler<CommentDTO>> list(@PathVariable("bno") Long bno
+                                                , @PathVariable("page") int page){
+        Page<CommentDTO> list = commentService.getList(bno, page);
+        PageHandler<CommentDTO> pagehandler = new PageHandler<>(list, page);
+
+        return new ResponseEntity<PageHandler<CommentDTO>> (pagehandler,HttpStatus.OK);
     }
 
     @PutMapping(value = "/modify",
@@ -51,5 +63,14 @@ public class CommentController {
                 new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
+
+    @DeleteMapping("/remove/{cno}")
+    public ResponseEntity<String> remove(@PathVariable("cno") long cno){
+        commentService.remove(cno);
+        return cno > 0 ?  new ResponseEntity<String>("1", HttpStatus.OK):
+                new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 
 }

@@ -61,7 +61,8 @@ public interface BoardService {
 
     BoardFileDTO getDetail(long bno);
 
-    Long modify(BoardDTO boardDTO);
+//    Long modify(BoardDTO boardDTO);
+    Long modify(BoardFileDTO boardFileDTO);
 
     void remove(long bno);
 
@@ -91,4 +92,10 @@ public interface BoardService {
                 .build();
     }
     Long insert(BoardFileDTO boardFileDTO);
+
+    long fileRemove(String uuid);
+
+    FileDTO getFile(String uuid);
+
+    List<FileDTO> getTodayFileList(String today);
 }

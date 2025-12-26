@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
-@RestController
+@RestController // 비동기를 주로 처리하는 컨트롤러
 @RequestMapping("/comment/*")
 public class CommentController {
     private final CommentService commentService;
@@ -70,7 +70,5 @@ public class CommentController {
         return cno > 0 ?  new ResponseEntity<String>("1", HttpStatus.OK):
                 new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 
 }

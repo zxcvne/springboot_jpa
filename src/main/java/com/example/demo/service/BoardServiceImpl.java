@@ -59,6 +59,7 @@ public class BoardServiceImpl implements BoardService{
         return bno;
     }
 
+    @Transactional
     @Override
     public long fileRemove(String uuid) {
 
@@ -87,9 +88,9 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public List<FileDTO> getTodayFileList(String today) {
-        Optional<File> fileList = fileRepository.findBySaveDir(today);
-        if(fileList.isEmpty() || fileList != null){
-            return fileList.stream()
+        Optional<List<File>> fileList = fileRepository.findBySaveDir(today);
+        if(fileList.isPresent()){
+            return fileList.get().stream()
                     .map(this :: convertEntityToDto)
                     .toList();
         }

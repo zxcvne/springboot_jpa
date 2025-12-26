@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface FileRepository extends JpaRepository<File, String> {
 
     List<File> findByBno(Long bno);
-    Optional<File> findBySaveDir(String today);
+    Optional<List<File>> findBySaveDir(String today);
 }

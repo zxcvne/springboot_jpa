@@ -1,7 +1,6 @@
 package com.example.demo.handler;
 
 import com.example.demo.dto.FileDTO;
-import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +9,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,7 +30,7 @@ public class FileSweeper {
     private final String BASE_PATH = "/home/zxcvne/web_0826_nhs/_myProject/_java/_fileUpload/";
 
     // cron 방식 = 초 분 시 일 월 요일 년도(생략가능)
-    @Scheduled(cron = "30 1 17 * * *")
+    @Scheduled(cron = "30 47 17 * * *")
     public void fileSweeper() {
         log.info(">>> fileSweeper Start >> {}", LocalDateTime.now());
 
@@ -42,6 +43,34 @@ public class FileSweeper {
         List<FileDTO> dbFileList = boardService.getTodayFileList(today);
         log.info(">>> dbFileList >> {}", dbFileList);
 
+        List<String> currFile = new ArrayList<>();
+        for(FileDTO fileDTO : dbFileList){
+            String fileName = today+File.separator+fileDTO.getUuid()+"_"+fileDTO.getFileName();
+            currFile.add(BASE_PATH+fileName);
+            // 이미지 파일이라면 썸네일도 추가
+            if(fileDTO.getFileType() == 1){
+                String thFileName =today + File.separator+fileDTO.getUuid()
+                        + "_th_"+fileDTO.getFileName();
+                currFile.add(BASE_PATH+thFileName);
+            }
+        }
+
+        // today 경로 기반 저장된 파일 검색(경로만)
+        // /home/zxcvne/web_0826_nhs/_myProject/_java/_fileUpload/2025/12/06
+        File dir = Paths.get(BASE_PATH+today).toFile();
+
+        // 경로안에 있는 파일을 가져오기 (배열로 리턴)
+        File[] allFileObject = dir.listFiles();
+
+        // allfileobject와 DB에 있는 파일과 비교
+        // DB에 없는 (존재하지 않는) 파일은 삭제
+        for(File file : allFileObject){
+            String storedFileName = file.toPath().toString();
+            if(!currFile.contains(storedFileName)){
+                file.delete(); // 리스트에 없다면 삭제
+                log.info(">>> delete file >> {}", storedFileName);
+            }
+        }
         log.info(">>> fileSweeper End >> {}", LocalDateTime.now());
     }
 }

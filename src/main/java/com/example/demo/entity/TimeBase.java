@@ -22,7 +22,7 @@ public class TimeBase {
     private LocalDateTime regDate;
 
     @LastModifiedDate
-    @Column(name="mode_date") /* 안쓰면 기본 true */
+    @Column(name="mod_date") /* 안쓰면 기본 true */
     private LocalDateTime modDate;
 
 }

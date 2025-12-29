@@ -1,0 +1,16 @@
+package com.example.demo.dto;
+
+
+import lombok.*;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class AuthUserDTO {
+    private long id;
+    private String email; // 권한만 따로 때서
+    private String role;
+}

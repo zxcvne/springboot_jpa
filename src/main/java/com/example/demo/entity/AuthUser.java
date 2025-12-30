@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthUser extends  TimeBase {
+public class AuthUser {
     // M : 1 (다대일 맵핑)
 
     @Id

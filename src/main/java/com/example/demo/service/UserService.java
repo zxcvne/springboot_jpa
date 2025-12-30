@@ -6,6 +6,8 @@ import com.example.demo.entity.AuthRole;
 import com.example.demo.entity.AuthUser;
 import com.example.demo.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
     // convert DtoToEntity
@@ -18,7 +20,7 @@ public interface UserService {
                 .build();
     }
 
-    default UserDTO convertDtoToEntity(User user){
+    default UserDTO convertEntityToDTO(User user){
                 return UserDTO.builder()
                         .email(user.getEmail())
                         .nickName(user.getNickName())
@@ -51,6 +53,11 @@ public interface UserService {
 
     String register(UserDTO userDTO);
 
+    void lastLoginUpdate(String name);
+
+    String modify(UserDTO userDTO);
+
+    List<UserDTO> getList();
 
     // Entity = Dto
 }

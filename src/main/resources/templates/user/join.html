@@ -8,6 +8,8 @@
     <div class="container-sm">
         <h3>User SignUp Page</h3>
         <form action="/user/join" method="post">
+            <!-- CSRF 토큰 추가 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <div class="mb-3">
                 <label for="e" class="form-label">Email</label>
                 <input type="text" class="form-control" id="e" name="email" placeholder="id@example.com... ">

@@ -18,7 +18,6 @@ public interface BoardService {
     /* convert : 변환, 위치는 상관 없음
     * */
 
-
     /* BoardDTO => Board 객체로 변환
      *  BoardDTO(class) : bno, title, writer, content, readCount, cmtQty, fileQty, regDate, modDate
      *  Board(entity) : bno, title, writer, content, readCount, cmtQty, fileQty

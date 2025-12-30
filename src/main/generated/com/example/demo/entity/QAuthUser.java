@@ -22,17 +22,9 @@ public class QAuthUser extends EntityPathBase<AuthUser> {
 
     public static final QAuthUser authUser = new QAuthUser("authUser");
 
-    public final QTimeBase _super = new QTimeBase(this);
-
     public final EnumPath<AuthRole> auth = createEnum("auth", AuthRole.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> modDate = _super.modDate;
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
     public final QUser user;
 

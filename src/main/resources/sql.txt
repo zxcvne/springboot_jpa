@@ -1,0 +1,5 @@
+create database bootdb;
+
+create user 'springuser'@'localhost' identified by 'mysql';
+grant all privileges on bootdb.* to 'springuser'@'localhost';
+flush privileges;

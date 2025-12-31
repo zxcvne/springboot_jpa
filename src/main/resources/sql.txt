@@ -1,7 +1,0 @@
-create database bootdb;
-
-create user 'springuser'@'localhost' identified by 'mysql';
-grant all privileges on bootdb.* to 'springuser'@'localhost';
-flush privileges;
-
-insert into auth(email,auth) values('1111@root.com', 'ADMIN');

@@ -46,7 +46,7 @@ thumbnailator 0.4.20 -> 추가
 application.properties
 fileupload 설정 추가
 
-``````
+```
 dependencies {
 // Querydsl 라이브러리 (JPA 연동용)
 implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
@@ -58,4 +58,16 @@ implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
+```
+
+### Test DB
+
+```sql
+create database bootdb;
+
+create user 'springuser'@'localhost' identified by 'mysql';
+grant all privileges on bootdb.* to 'springuser'@'localhost';
+flush privileges;
+
+insert into auth(email,auth) values('1111@root.com', 'ADMIN');
 ```
